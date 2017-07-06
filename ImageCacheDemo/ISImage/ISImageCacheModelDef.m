@@ -61,6 +61,18 @@
     }
 }
 
+-(void)removeCollections
+{
+    @try {
+        [list removeAllObjects];
+    } @catch (NSException *exception) {
+        NSLog(@"failed te remove collections %@", exception.reason);
+    } @finally {
+        [pref setObject:list forKey:refKey];
+        [pref synchronize];
+    }
+}
+
 -(void)addImage:(NSDictionary *)image withCollection:(NSString *)key
 {
     NSMutableDictionary *clist = nil;

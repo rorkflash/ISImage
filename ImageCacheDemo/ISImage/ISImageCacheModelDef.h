@@ -13,10 +13,13 @@
 
 -(NSMutableDictionary *)setupList;
 
--(void)addCollection:(NSDictionary *)collection;
--(void)removeCollection:(NSString *)key;
 -(void)addImage:(NSDictionary *)image withCollection:(NSString *)coll;
 -(void)removeImage:(NSString *)key withCollection:(NSString *)collName;
+
+-(void)addCollection:(NSDictionary *)collection;
+-(void)removeCollection:(NSString *)key;
+-(void)removeCollections;
+
 -(void)clearAll;
 
 @end

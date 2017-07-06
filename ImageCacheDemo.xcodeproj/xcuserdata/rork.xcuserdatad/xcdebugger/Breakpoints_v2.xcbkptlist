@@ -9,28 +9,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageCacheDemo/ISImage/ISImageCacheModelDef.m"
-            timestampString = "520702344.690943"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-addCollection:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ImageCacheDemo/ISImage/ISImageCache.m"
-            timestampString = "520945984.078422"
+            timestampString = "521029488.733184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "-setImage:withKey:withCollection:withStorType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,28 +26,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageCacheDemo/ViewController.m"
-            timestampString = "520950239.102983"
+            timestampString = "521038968.62817"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "-loadImages"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageCacheDemo/ISImage/ISImageCache.m"
-            timestampString = "520950168.749858"
+            filePath = "ImageCacheDemo/ViewController.m"
+            timestampString = "521039009.870754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
-            landmarkName = "-clearAll"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-loadImages"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageCacheDemo/ISImage/UIImage+Load.m"
+            timestampString = "521039055.775082"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "+getImage:withCache:completion:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

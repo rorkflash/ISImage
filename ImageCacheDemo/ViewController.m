@@ -25,19 +25,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     cache = [ISImageCache getInstance];
+    [cache clearAllWithModel:ISCacheModelDef];
     [cache setup];
-    //[cache clearCache];
     if (cache.list.count <= 1) {
         [cache addCollectionWithName:@"main" withStoreType:ISCacheStoreTypeInDrive];
     }
     
     self.list1 = @[
-                   @"https://www.w3schools.com/css/img_fjords.jpg",
-                   @"http://i.stack.imgur.com/WCveg.jpg",
-                   @"http://lokeshdhakar.com/projects/lightbox2/images/image-3.jpg",
-                   @"http://wowslider.com/sliders/demo-65/data1/images/bernese_oberland.jpg",
-                   @"http://bsnscb.com/data/out/101/40051776-image-wallpapers.jpg",
-                   @"http://bsnscb.com/data/out/102/39454516-image-wallpapers.jpg"
+                   @{@"name":@"1", @"url":@"https://www.w3schools.com/css/img_fjords.jpg"},
+                   @{@"name":@"2", @"url":@"http://i.stack.imgur.com/WCveg.jpg"},
+                   @{@"name":@"3", @"url":@"http://lokeshdhakar.com/projects/lightbox2/images/image-3.jpg"},
+                   @{@"name":@"4", @"url":@"http://wowslider.com/sliders/demo-65/data1/images/bernese_oberland.jpg"},
+                   @{@"name":@"5", @"url":@"http://bsnscb.com/data/out/101/40051776-image-wallpapers.jpg"},
+                   @{@"name":@"6", @"url":@"http://bsnscb.com/data/out/102/39454516-image-wallpapers.jpg"}
                    ];
     
     self.list2 = @[
@@ -75,8 +75,8 @@
 -(void)loadImages
 {
     NSDictionary *obj = nil;
-    for (int i=0; i<self.list3.count; i++) {
-        obj = self.list3[i];
+    for (int i=0; i<self.list2.count; i++) {
+        obj = self.list2[i];
         [UIImage getImage:obj[@"url"] withCache:@[obj[@"name"], @"main", [NSNumber numberWithInt:ISCacheStoreTypeInDrive]]
                 completion:^(UIImage *img, NSError *error) {
                     UIImageView *imgView = [[UIImageView alloc] initWithImage:img];

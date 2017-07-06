@@ -71,7 +71,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="oJg-iD-yR7" secondAttribute="trailing" id="wst-eo-msD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Static" id="OfI-Zm-NR7"/>
+                    <tabBarItem key="tabBarItem" title="Static" image="static" id="OfI-Zm-NR7"/>
                     <connections>
                         <outlet property="clearCacheBtn" destination="Xhg-do-cqD" id="alm-NK-oxf"/>
                         <outlet property="refreshBtn" destination="oJg-iD-yR7" id="EV0-0f-qBr"/>
@@ -94,7 +94,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="List" id="fpy-3l-hIB"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="fpy-3l-hIB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBC-5k-AUl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,4 +119,8 @@
             <point key="canvasLocation" x="184" y="-89"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="list" width="30" height="30"/>
+        <image name="static" width="30" height="30"/>
+    </resources>
 </document>

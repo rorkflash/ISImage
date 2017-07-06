@@ -25,6 +25,11 @@
     
 }
 
+-(void)removeCollections
+{
+    
+}
+
 -(void)addImage:(NSDictionary *)image withCollection:(NSString *)coll
 {
     

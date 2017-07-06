@@ -41,7 +41,7 @@
 -(void)removeCollections;
 
 -(void)clearCache;
--(void)clearCacheInCollection:(NSString *)name;
+-(void)clearCollection:(NSString *)name;
 -(void)clearAll;
 -(void)clearAllWithModel:(int)modelType;
 

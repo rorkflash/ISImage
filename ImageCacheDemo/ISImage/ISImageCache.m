@@ -28,7 +28,6 @@
     self = [super init];
     if (self)
     {
-        self.collections = [[NSMutableDictionary alloc] init];
         self.list = [[NSMutableDictionary alloc] init];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -45,7 +44,6 @@
 -(void)setupWith:(int)modelType
 {
     [self setModelType:modelType];
-    
     [self loadData];
 }
 
@@ -63,6 +61,7 @@
     NSMutableDictionary *list = [self.model setupList];
     NSDictionary *imgList = nil;
     NSMutableDictionary *imgObj = nil;
+    [self.list removeAllObjects];
     
     if ([list count] > 0) {
         for (NSString *key in list) {
@@ -152,9 +151,9 @@
 
 -(void)setImage:(UIImage *)img withKey:(NSString *)key withCollection:(NSString *)collName
 {
-    ISImageCacheCollection *collection = self.collections[collName];
-    if (collection != nil) {
-        int type = collection.storeType;
+    ISImageCacheCollection *coll = self.list[collName];
+    if (coll != nil) {
+        int type = coll.storeType;
         [self setImage:img withKey:key withCollection:collName withStorType:type];
     } else {
         NSLog(@"collection not exist");
@@ -176,7 +175,6 @@
     // CHECK IMAGE EXIST
     @try {
         ISImageCacheCollection *coll = self.list[collName];
-        //ISImageCacheCollection *collection = self.collections[collName];
         
         if (coll != nil) {
             NSMutableDictionary *obj = nil;
@@ -291,20 +289,21 @@
 
 -(ISImageCacheCollection *)getCollection:(NSString *)name
 {
-    return [self.collections objectForKey:name];
+    return [self.list objectForKey:name];
 }
 
 -(void)removeCollection:(NSString *)name
 {
     @try {
-        [self clearCacheInCollection:name];
+        [self clearCollection:name];
         //
-        [self.collections removeObjectForKey:name];
+        [self.list removeObjectForKey:name];
     } @catch (NSException *exception) {
         NSLog(@"problem to remove collection with name %@ \n reason %@", name, exception.reason);
     } @finally {
         
         // DATA
+        [self.model removeCollection:name];
         [self.pref setObject:self.list forKey:@"ISImageCache"];
         [self.pref synchronize];
     }
@@ -312,27 +311,21 @@
 
 -(void)removeCollections
 {
-    for (NSString *key in self.list) {
-        [self clearCacheInCollection:key];
-        [self.list removeObjectForKey:key];
+    @try {
+        [self.model removeCollections];
+        for (NSString *key in self.list) {
+            [self clearCollection:key];
+            //[self.list removeObjectForKey:key];
+        }
+        [self.list removeAllObjects];
+    } @catch (NSException *exception) {
+        NSLog(@"collections remove failed %@", exception.reason);
+    } @finally {
+        
     }
 }
 
--(void)clearCollections
-{
-    for (NSString *key in self.list) {
-        [self clearCacheInCollection:key];
-    }
-}
-
-// CLEAR
-
--(void)clearCache
-{
-    [self clearCollections];
-}
-
--(void)clearCacheInCollection:(NSString *)name
+-(void)clearCollection:(NSString *)name
 {
     NSDictionary *img = nil;
     ISImageCacheCollection *coll = self.list[name];
@@ -348,15 +341,29 @@
         [self.model removeCollection:name];
         //
     } @catch (NSException *exception) {
-        NSLog(@"failed to clear cache");
+        NSLog(@"failed to clear collection cache %@", exception.reason);
     } @finally {
         
     }
 }
 
+-(void)clearCollections
+{
+    for (NSString *key in self.list) {
+        [self clearCollection:key];
+    }
+}
+
+// CLEAR
+
+-(void)clearCache
+{
+    [self clearCollections];
+}
+
 -(void)clearAll
 {
-    [self removeCollections];
+    [self clearCollections];
     [self.model clearAll];
 }
 
