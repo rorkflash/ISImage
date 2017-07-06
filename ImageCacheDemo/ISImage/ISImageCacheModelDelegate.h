@@ -24,6 +24,7 @@ typedef enum {
 -(void)removeCollection:(NSString *)key;
 -(void)addImage:(NSDictionary *)image withCollection:(NSString *)coll;
 -(void)removeImage:(NSString *)key withCollection:(NSString *)collName;
+-(void)clearAll;
 
 @optional
 

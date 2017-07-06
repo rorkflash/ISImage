@@ -35,4 +35,9 @@
     
 }
 
+-(void)clearAll
+{
+    
+}
+
 @end

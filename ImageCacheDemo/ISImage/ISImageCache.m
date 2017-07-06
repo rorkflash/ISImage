@@ -28,7 +28,8 @@
     self = [super init];
     if (self)
     {
-        
+        self.collections = [[NSMutableDictionary alloc] init];
+        self.list = [[NSMutableDictionary alloc] init];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         docDir = [paths objectAtIndex:0];
@@ -43,15 +44,22 @@
 
 -(void)setupWith:(int)modelType
 {
+    [self setModelType:modelType];
+    
+    [self loadData];
+}
+
+-(void)setModelType:(int)modelType
+{
     if (modelType == ISCacheModelDef) {
         self.model = [[ISImageCacheModelDef alloc] init];
     } else {
         self.model = [[ISImageCacheModelCD alloc] init];
     }
-    
-    self.collections = [[NSMutableDictionary alloc] init];
-    self.list = [[NSMutableDictionary alloc] init];
-    
+}
+
+-(void)loadData
+{
     NSMutableDictionary *list = [self.model setupList];
     NSDictionary *imgList = nil;
     NSMutableDictionary *imgObj = nil;
@@ -64,13 +72,13 @@
             // Image List
             for (NSString *imgKey in imgList) {
                 imgObj = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                        @"name":imgList[imgKey][@"name"],
-                                                                        @"image":[NSNull null],
-                                                                        @"path":imgList[imgKey][@"path"],
-                                                                        @"storetype":imgList[imgKey][@"storetype"],
-                                                                        @"date": imgList[imgKey][@"date"],
-                                                                        @"timestamp": imgList[imgKey][@"timestamp"]
-                                                                        }];
+                                                                           @"name":imgList[imgKey][@"name"],
+                                                                           @"image":imgList[imgKey][@"image"],
+                                                                           @"path":imgList[imgKey][@"path"],
+                                                                           @"storetype":imgList[imgKey][@"storetype"],
+                                                                           @"date": imgList[imgKey][@"date"],
+                                                                           @"timestamp": imgList[imgKey][@"timestamp"]
+                                                                           }];
                 coll.list[imgKey] = imgObj;
             }
             // Order list
@@ -127,6 +135,10 @@
         if (coll.list[key] != nil) {
             obj = coll.list[key];
             img = obj[@"image"];
+            if (img == nil || [img isEqual:@""]) {
+                NSString *path = obj[@"path"];
+                img = [UIImage imageWithContentsOfFile:path];
+            }
         }
         
     } @catch (NSException *exception) {
@@ -179,11 +191,11 @@
             
             obj = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                     @"name":name,
-                                                                    @"image":[NSNull null],
+                                                                    @"image":@"",
                                                                     @"path":@"",
                                                                     @"storetype":[NSNumber numberWithInt:type],
-                                                                    //@"date": dateString,
-                                                                    //@"timestamp": [NSString stringWithFormat:@"%f", timestamp]
+                                                                    @"date": dateString,
+                                                                    @"timestamp": [NSString stringWithFormat:@"%f", timestamp]
                                                                     }];
             
             if (type == ISCacheStoreTypeInDrive) {
@@ -300,29 +312,63 @@
 
 -(void)removeCollections
 {
-    
+    for (NSString *key in self.list) {
+        [self clearCacheInCollection:key];
+        [self.list removeObjectForKey:key];
+    }
 }
 
 -(void)clearCollections
 {
-    
+    for (NSString *key in self.list) {
+        [self clearCacheInCollection:key];
+    }
 }
 
 // CLEAR
 
 -(void)clearCache
 {
-    
+    [self clearCollections];
 }
 
 -(void)clearCacheInCollection:(NSString *)name
 {
+    NSDictionary *img = nil;
+    ISImageCacheCollection *coll = self.list[name];
+    NSError *error = nil;
     
+    @try {
+        for (NSString *key in coll.list) {
+            img = coll.list[key];
+            [[NSFileManager defaultManager] removeItemAtPath:img[@"path"] error:&error];
+        }
+        [coll.list removeAllObjects];
+        [coll.order removeAllObjects];
+        [self.model removeCollection:name];
+        //
+    } @catch (NSException *exception) {
+        NSLog(@"failed to clear cache");
+    } @finally {
+        
+    }
 }
 
 -(void)clearAll
 {
-    
+    [self removeCollections];
+    [self.model clearAll];
+}
+
+-(void)clearAllWithModel:(int)modelType
+{
+    id <ISImageCacheModelDelegate> model = nil;
+    if (modelType == ISCacheModelDef) {
+        model = [[ISImageCacheModelDef alloc] init];
+    } else {
+        model = [[ISImageCacheModelCD alloc] init];
+    }
+    [model clearAll];
 }
 
 @end

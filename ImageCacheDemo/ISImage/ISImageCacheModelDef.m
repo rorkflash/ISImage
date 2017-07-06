@@ -92,4 +92,9 @@
     }
 }
 
+-(void)clearAll
+{
+    [pref setObject:[[NSMutableDictionary alloc] init] forKey:refKey];
+}
+
 @end

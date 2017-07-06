@@ -13,6 +13,7 @@
 @interface ViewController ()
 {
     NSNumber *cols;
+    ISImageCache *cache;
 }
 
 @end
@@ -23,8 +24,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [[ISImageCache getInstance] setup];
-    [[ISImageCache getInstance] addCollectionWithName:@"main" withStoreType:ISCacheStoreTypeInDrive];
+    cache = [ISImageCache getInstance];
+    [cache setup];
+    //[cache clearCache];
+    if (cache.list.count <= 1) {
+        [cache addCollectionWithName:@"main" withStoreType:ISCacheStoreTypeInDrive];
+    }
     
     self.list1 = @[
                    @"https://www.w3schools.com/css/img_fjords.jpg",
@@ -101,7 +106,8 @@
 
 - (IBAction)onClear:(UIButton *)sender
 {
-    
+    NSLog(@"ClearAll");
+    [[ISImageCache getInstance] clearAll];
 }
 
 - (void)didReceiveMemoryWarning {
