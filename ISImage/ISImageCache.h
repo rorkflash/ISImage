@@ -28,6 +28,8 @@
 
 -(void)setup;
 -(void)setupWith:(int)modelType;
+-(void)setModelType:(int)modelType;
+-(void)loadData;
 
 -(UIImage *)getImage:(NSString *)key fromCollection:(NSString *)collName;
 -(void)setImage:(UIImage *)img withKey:(NSString *)key withCollection:(NSString *)collName;
@@ -39,7 +41,8 @@
 -(void)removeCollections;
 
 -(void)clearCache;
--(void)clearCacheInCollection:(NSString *)name;
+-(void)clearCollection:(NSString *)name;
 -(void)clearAll;
+-(void)clearAllWithModel:(int)modelType;
 
 @end

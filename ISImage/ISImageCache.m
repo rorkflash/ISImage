@@ -28,7 +28,7 @@
     self = [super init];
     if (self)
     {
-        
+        self.list = [[NSMutableDictionary alloc] init];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         docDir = [paths objectAtIndex:0];
@@ -43,18 +43,25 @@
 
 -(void)setupWith:(int)modelType
 {
+    [self setModelType:modelType];
+    [self loadData];
+}
+
+-(void)setModelType:(int)modelType
+{
     if (modelType == ISCacheModelDef) {
         self.model = [[ISImageCacheModelDef alloc] init];
     } else {
         self.model = [[ISImageCacheModelCD alloc] init];
     }
-    
-    self.collections = [[NSMutableDictionary alloc] init];
-    self.list = [[NSMutableDictionary alloc] init];
-    
+}
+
+-(void)loadData
+{
     NSMutableDictionary *list = [self.model setupList];
     NSDictionary *imgList = nil;
     NSMutableDictionary *imgObj = nil;
+    [self.list removeAllObjects];
     
     if ([list count] > 0) {
         for (NSString *key in list) {
@@ -64,13 +71,13 @@
             // Image List
             for (NSString *imgKey in imgList) {
                 imgObj = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                        @"name":imgList[imgKey][@"name"],
-                                                                        @"image":[NSNull null],
-                                                                        @"path":imgList[imgKey][@"path"],
-                                                                        @"storetype":imgList[imgKey][@"storetype"],
-                                                                        @"date": imgList[imgKey][@"date"],
-                                                                        @"timestamp": imgList[imgKey][@"timestamp"]
-                                                                        }];
+                                                                           @"name":imgList[imgKey][@"name"],
+                                                                           @"image":imgList[imgKey][@"image"],
+                                                                           @"path":imgList[imgKey][@"path"],
+                                                                           @"storetype":imgList[imgKey][@"storetype"],
+                                                                           @"date": imgList[imgKey][@"date"],
+                                                                           @"timestamp": imgList[imgKey][@"timestamp"]
+                                                                           }];
                 coll.list[imgKey] = imgObj;
             }
             // Order list
@@ -127,6 +134,10 @@
         if (coll.list[key] != nil) {
             obj = coll.list[key];
             img = obj[@"image"];
+            if (img == nil || [img isEqual:@""]) {
+                NSString *path = obj[@"path"];
+                img = [UIImage imageWithContentsOfFile:path];
+            }
         }
         
     } @catch (NSException *exception) {
@@ -140,9 +151,9 @@
 
 -(void)setImage:(UIImage *)img withKey:(NSString *)key withCollection:(NSString *)collName
 {
-    ISImageCacheCollection *collection = self.collections[collName];
-    if (collection != nil) {
-        int type = collection.storeType;
+    ISImageCacheCollection *coll = self.list[collName];
+    if (coll != nil) {
+        int type = coll.storeType;
         [self setImage:img withKey:key withCollection:collName withStorType:type];
     } else {
         NSLog(@"collection not exist");
@@ -158,14 +169,13 @@
     NSString *dateString = [formatter stringFromDate:currentDate];
     NSTimeInterval since1970 = [currentDate timeIntervalSince1970];
     double timestamp = since1970 * 1000;
-    NSString *name = key;//[NSString stringWithFormat:@"%f", timestamp];
+    NSString *name = [NSString stringWithFormat:@"%f", timestamp];
     // IMAGE PART
     NSData *imageData = UIImagePNGRepresentation(img);
     // CHECK IMAGE EXIST
     @try {
         ISImageCacheCollection *coll = self.list[collName];
-        //ISImageCacheCollection *collection = self.collections[collName];
-        
+        //
         if (coll != nil) {
             NSMutableDictionary *obj = nil;
             // check store type
@@ -179,11 +189,12 @@
             
             obj = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                     @"name":name,
-                                                                    @"image":[NSNull null],
+                                                                    @"image":@"",
                                                                     @"path":@"",
+                                                                    //@"url":@"",
                                                                     @"storetype":[NSNumber numberWithInt:type],
-                                                                    //@"date": dateString,
-                                                                    //@"timestamp": [NSString stringWithFormat:@"%f", timestamp]
+                                                                    @"date": dateString,
+                                                                    @"timestamp": [NSString stringWithFormat:@"%f", timestamp]
                                                                     }];
             
             if (type == ISCacheStoreTypeInDrive) {
@@ -193,7 +204,7 @@
                 if (![imageData writeToFile:imagePath atomically:YES]) {
                     NSLog(@"Failed to cache image data to disk");
                 } else {
-                    NSLog(@"the cachedImaged is %@", key);
+                    //NSLog(@"the cachedImaged is %@", key);
                     // DATA
                     obj[@"path"] = imagePath;
                     [self.model addImage:obj withCollection:collName];
@@ -204,6 +215,7 @@
             }
             
             // Dynamic Data
+            NSLog(@"image %@ saved in \"%@\" collection", key, coll.name);
             coll.list[key] = obj;
             // Ordering
             [coll.order insertObject:key atIndex:0]; // add to beginnig of array
@@ -279,20 +291,21 @@
 
 -(ISImageCacheCollection *)getCollection:(NSString *)name
 {
-    return [self.collections objectForKey:name];
+    return [self.list objectForKey:name];
 }
 
 -(void)removeCollection:(NSString *)name
 {
     @try {
-        [self clearCacheInCollection:name];
+        [self clearCollection:name];
         //
-        [self.collections removeObjectForKey:name];
+        [self.list removeObjectForKey:name];
     } @catch (NSException *exception) {
         NSLog(@"problem to remove collection with name %@ \n reason %@", name, exception.reason);
     } @finally {
         
         // DATA
+        [self.model removeCollection:name];
         [self.pref setObject:self.list forKey:@"ISImageCache"];
         [self.pref synchronize];
     }
@@ -300,29 +313,71 @@
 
 -(void)removeCollections
 {
+    @try {
+        [self.model removeCollections];
+        for (NSString *key in self.list) {
+            [self clearCollection:key];
+            //[self.list removeObjectForKey:key];
+        }
+        [self.list removeAllObjects];
+    } @catch (NSException *exception) {
+        NSLog(@"collections remove failed %@", exception.reason);
+    } @finally {
+        
+    }
+}
+
+-(void)clearCollection:(NSString *)name
+{
+    NSDictionary *img = nil;
+    ISImageCacheCollection *coll = self.list[name];
+    NSError *error = nil;
     
+    @try {
+        for (NSString *key in coll.list) {
+            img = coll.list[key];
+            [[NSFileManager defaultManager] removeItemAtPath:img[@"path"] error:&error];
+        }
+        [coll.list removeAllObjects];
+        [coll.order removeAllObjects];
+        [self.model removeCollection:name];
+        //
+    } @catch (NSException *exception) {
+        NSLog(@"failed to clear collection cache %@", exception.reason);
+    } @finally {
+        
+    }
 }
 
 -(void)clearCollections
 {
-    
+    for (NSString *key in self.list) {
+        [self clearCollection:key];
+    }
 }
 
 // CLEAR
 
 -(void)clearCache
 {
-    
-}
-
--(void)clearCacheInCollection:(NSString *)name
-{
-    
+    [self clearCollections];
 }
 
 -(void)clearAll
 {
-    
+    [self clearCollections];
+    [self.model clearAll];
+}
+
+-(void)clearAllWithModel:(int)modelType
+{
+    id <ISImageCacheModelDelegate> model = nil;
+    if (modelType == ISCacheModelDef) {
+        model = [[ISImageCacheModelDef alloc] init];
+    } else {
+        model = [[ISImageCacheModelCD alloc] init];
+    }
+    [model clearAll];
 }
 
 @end
