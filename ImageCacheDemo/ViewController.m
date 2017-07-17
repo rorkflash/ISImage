@@ -25,10 +25,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     cache = [ISImageCache getInstance];
-    [cache clearAllWithModel:ISCacheModelDef];
+    //[cache clearAllWithModel:ISCacheModelDef];
     [cache setup];
     if (cache.list.count <= 1) {
         [cache addCollectionWithName:@"main" withStoreType:ISCacheStoreTypeInDrive];
+        [cache addCollectionWithName:@"list" withStoreType:ISCacheStoreTypeInDrive];
     }
     
     self.list1 = @[
@@ -41,7 +42,7 @@
                    ];
     
     self.list2 = @[
-                   @{@"name":@"1", @"url": @"https://static.pexels.com/photos/3247/nature-forest-industry-rails.jpg"},
+                   @{@"name":@"1", @"url": @"https://wallpaperscraft.com/image/boat_river_sea_116220_1024x768.jpg"},
                    @{@"name":@"2", @"url": @"https://wallpaperscraft.com/image/switzerland_mountains_alps_road_summer_86912_1920x1080.jpg"},
                    @{@"name":@"3", @"url": @"https://wallpaperscraft.com/image/lake_sunset_trees_landscape_beach_art_night_reflection_48159_1920x1080.jpg"},
                    @{@"name":@"4", @"url": @"https://wallpaperscraft.com/image/fog_trees_forest_thicket_84863_1920x1080.jpg"},

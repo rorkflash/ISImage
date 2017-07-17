@@ -169,13 +169,13 @@
     NSString *dateString = [formatter stringFromDate:currentDate];
     NSTimeInterval since1970 = [currentDate timeIntervalSince1970];
     double timestamp = since1970 * 1000;
-    NSString *name = key;//[NSString stringWithFormat:@"%f", timestamp];
+    NSString *name = [NSString stringWithFormat:@"%f", timestamp];
     // IMAGE PART
     NSData *imageData = UIImagePNGRepresentation(img);
     // CHECK IMAGE EXIST
     @try {
         ISImageCacheCollection *coll = self.list[collName];
-        
+        //
         if (coll != nil) {
             NSMutableDictionary *obj = nil;
             // check store type
@@ -191,6 +191,7 @@
                                                                     @"name":name,
                                                                     @"image":@"",
                                                                     @"path":@"",
+                                                                    //@"url":@"",
                                                                     @"storetype":[NSNumber numberWithInt:type],
                                                                     @"date": dateString,
                                                                     @"timestamp": [NSString stringWithFormat:@"%f", timestamp]
@@ -203,7 +204,7 @@
                 if (![imageData writeToFile:imagePath atomically:YES]) {
                     NSLog(@"Failed to cache image data to disk");
                 } else {
-                    NSLog(@"the cachedImaged is %@", key);
+                    //NSLog(@"the cachedImaged is %@", key);
                     // DATA
                     obj[@"path"] = imagePath;
                     [self.model addImage:obj withCollection:collName];
@@ -214,6 +215,7 @@
             }
             
             // Dynamic Data
+            NSLog(@"image %@ saved in \"%@\" collection", key, coll.name);
             coll.list[key] = obj;
             // Ordering
             [coll.order insertObject:key atIndex:0]; // add to beginnig of array

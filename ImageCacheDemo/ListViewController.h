@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "UIImage+Load.h"
 
-@interface ListViewController : NSObject
+@interface ListViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) NSArray *dataList;
 
 @end

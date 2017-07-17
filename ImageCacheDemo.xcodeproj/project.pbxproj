@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91100F2F1F1BD34000D901FC /* MainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91100F2C1F1BD34000D901FC /* MainCell.xib */; };
+		91100F301F1BD34000D901FC /* MainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91100F2E1F1BD34000D901FC /* MainCell.m */; };
 		9173EA2E1F015E1F000F5546 /* ISImageCacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9173EA2D1F015E1F000F5546 /* ISImageCacheImage.m */; };
 		9186FDDF1F0E712900F1C01E /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9186FDDE1F0E712900F1C01E /* ListViewController.m */; };
 		91B42C9F1F0408DE006703C1 /* UIImage+Load.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B42C9E1F0408DE006703C1 /* UIImage+Load.m */; };
@@ -27,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		91100F2C1F1BD34000D901FC /* MainCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainCell.xib; sourceTree = "<group>"; };
+		91100F2D1F1BD34000D901FC /* MainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCell.h; sourceTree = "<group>"; };
+		91100F2E1F1BD34000D901FC /* MainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainCell.m; sourceTree = "<group>"; };
 		9173EA2C1F015E1F000F5546 /* ISImageCacheImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISImageCacheImage.h; path = ISImage/ISImageCacheImage.h; sourceTree = "<group>"; };
 		9173EA2D1F015E1F000F5546 /* ISImageCacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISImageCacheImage.m; path = ISImage/ISImageCacheImage.m; sourceTree = "<group>"; };
 		9186FDDD1F0E712900F1C01E /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
@@ -88,6 +93,16 @@
 			name = ImageCache;
 			sourceTree = "<group>";
 		};
+		9186FDE01F116E5800F1C01E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				91100F2C1F1BD34000D901FC /* MainCell.xib */,
+				91100F2D1F1BD34000D901FC /* MainCell.h */,
+				91100F2E1F1BD34000D901FC /* MainCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		91D3C0B91EE6D99600F36D3B = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +149,7 @@
 		91D3C0DE1EE6DA5700F36D3B /* ISImage */ = {
 			isa = PBXGroup;
 			children = (
+				9186FDE01F116E5800F1C01E /* Cell */,
 				9173EA2B1F015DF7000F5546 /* ImageCache */,
 				91D3C0E01EE6DA6A00F36D3B /* ISImageCache.h */,
 				91D3C0E11EE6DA6A00F36D3B /* ISImageCache.m */,
@@ -221,6 +237,7 @@
 			files = (
 				91D3C0D51EE6D99600F36D3B /* LaunchScreen.storyboard in Resources */,
 				91D3C0D21EE6D99600F36D3B /* Assets.xcassets in Resources */,
+				91100F2F1F1BD34000D901FC /* MainCell.xib in Resources */,
 				91D3C0D01EE6D99600F36D3B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +254,7 @@
 				9186FDDF1F0E712900F1C01E /* ListViewController.m in Sources */,
 				91D3C0F21EE6DA6A00F36D3B /* ISImageShape.m in Sources */,
 				91D3C0EE1EE6DA6A00F36D3B /* ISImageCache.m in Sources */,
+				91100F301F1BD34000D901FC /* MainCell.m in Sources */,
 				91D3C0CD1EE6D99600F36D3B /* ViewController.m in Sources */,
 				9173EA2E1F015E1F000F5546 /* ISImageCacheImage.m in Sources */,
 				91B42CA21F07FE44006703C1 /* ISImageCacheObject.m in Sources */,
