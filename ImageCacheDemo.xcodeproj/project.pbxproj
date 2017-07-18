@@ -32,6 +32,7 @@
 		91100F2C1F1BD34000D901FC /* MainCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainCell.xib; sourceTree = "<group>"; };
 		91100F2D1F1BD34000D901FC /* MainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCell.h; sourceTree = "<group>"; };
 		91100F2E1F1BD34000D901FC /* MainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainCell.m; sourceTree = "<group>"; };
+		91100F3B1F1E324C00D901FC /* ISImageCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISImageCacheDelegate.h; path = ISImage/ISImageCacheDelegate.h; sourceTree = "<group>"; };
 		9173EA2C1F015E1F000F5546 /* ISImageCacheImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISImageCacheImage.h; path = ISImage/ISImageCacheImage.h; sourceTree = "<group>"; };
 		9173EA2D1F015E1F000F5546 /* ISImageCacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISImageCacheImage.m; path = ISImage/ISImageCacheImage.m; sourceTree = "<group>"; };
 		9186FDDD1F0E712900F1C01E /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		91D3C0EB1EE6DA6A00F36D3B /* ISImageUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISImageUtility.h; path = ISImage/ISImageUtility.h; sourceTree = "<group>"; };
 		91D3C0EC1EE6DA6A00F36D3B /* ISImageUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISImageUtility.m; path = ISImage/ISImageUtility.m; sourceTree = "<group>"; };
 		91D3C0FC1EE6DCB500F36D3B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		91D3C1021EE97AC100F36D3B /* ISImageCacheDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISImageCacheDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +84,9 @@
 				91D3C0DF1EE6DA6000F36D3B /* Model */,
 				91B42CA01F07FE44006703C1 /* ISImageCacheObject.h */,
 				91B42CA11F07FE44006703C1 /* ISImageCacheObject.m */,
+				91100F3B1F1E324C00D901FC /* ISImageCacheDelegate.h */,
 				9173EA2C1F015E1F000F5546 /* ISImageCacheImage.h */,
 				9173EA2D1F015E1F000F5546 /* ISImageCacheImage.m */,
-				91D3C1021EE97AC100F36D3B /* ISImageCacheDelegate.h */,
 				91D3C0E21EE6DA6A00F36D3B /* ISImageCacheCollection.h */,
 				91D3C0E31EE6DA6A00F36D3B /* ISImageCacheCollection.m */,
 			);
@@ -123,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				91D3C0DE1EE6DA5700F36D3B /* ISImage */,
+				9186FDE01F116E5800F1C01E /* Cell */,
 				91D3C0C81EE6D99600F36D3B /* AppDelegate.h */,
 				91D3C0C91EE6D99600F36D3B /* AppDelegate.m */,
 				91D3C0CB1EE6D99600F36D3B /* ViewController.h */,
@@ -149,7 +150,6 @@
 		91D3C0DE1EE6DA5700F36D3B /* ISImage */ = {
 			isa = PBXGroup;
 			children = (
-				9186FDE01F116E5800F1C01E /* Cell */,
 				9173EA2B1F015DF7000F5546 /* ImageCache */,
 				91D3C0E01EE6DA6A00F36D3B /* ISImageCache.h */,
 				91D3C0E11EE6DA6A00F36D3B /* ISImageCache.m */,
