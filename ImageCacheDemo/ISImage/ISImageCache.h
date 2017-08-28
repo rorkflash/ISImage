@@ -36,6 +36,7 @@
 -(void)setImage:(UIImage *)img withKey:(NSString *)key withCollection:(NSString *)collName withStorType:(int)type;
 
 -(void)addCollectionWithName:(NSString *)name withStoreType:(int)type;
+-(void)addCollectionWithName:(NSString *)name withStoreType:(int)type withCount:(int)count;
 -(void)addCollection:(ISImageCacheCollection *)coll;
 -(void)removeCollection:(NSString *)name;
 -(void)removeCollections;

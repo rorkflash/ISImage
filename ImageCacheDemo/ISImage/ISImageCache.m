@@ -282,6 +282,14 @@
     [self addCollection:coll];
 }
 
+-(void)addCollectionWithName:(NSString *)name withStoreType:(int)type withCount:(int)count
+{
+    ISImageCacheCollection *coll = [[ISImageCacheCollection alloc] initWithName:name
+                                                                  withStoreType:type
+                                                                      withCount:count];
+    [self addCollection:coll];
+}
+
 -(void)addCollection:(ISImageCacheCollection *)coll
 {
     self.list[coll.name] = coll;
